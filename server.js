@@ -39,6 +39,21 @@ app.post('/user', (req, res)=>{
     })
 })
 
+app.put('/user/:id', (req, res)=>{
+    const sql = "UPDATE user SET email = ?, username = ?, password = ? WHERE id = ?";
+    const values =[
+        req.body.email,
+        req.body.username,
+        req.body.password
+    ];
+    const id = req.params.id;
+
+    db.query(sql, [...values, id], (err, data)=>{
+        if(err) return res.json(err);
+        return res.json({message: "updated Sucessfully"})
+    })
+})
+
 app.listen(8081, ()=>{
     console.log('listening')
 })
