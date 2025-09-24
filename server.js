@@ -54,6 +54,16 @@ app.put('/user/:id', (req, res)=>{
     })
 })
 
+app.delete("/user/:id", (req, res) => {
+  const id = req.params.id; // get user id from URL
+  const sql = "DELETE FROM user WHERE id = ?";
+
+  db.query(sql, [id], (err, result) => {
+    if (err) return res.json(err);
+    return res.json({ message: "User deleted successfully", affectedRows: result.affectedRows });
+  });
+});
+
 app.listen(8081, ()=>{
     console.log('listening')
 })

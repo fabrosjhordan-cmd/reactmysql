@@ -64,6 +64,18 @@ function App() {
     })
   }
   
+  const handleDelete = (id) =>{
+   fetch(`http://localhost:8081/user/${id}`,{
+    method: 'DELETE'
+   })
+   .then((res)=> res.json())
+   .then((result)=>{
+    console.log(result)
+    setData(data.filter((item)=> item.id !== id))
+   })
+   .catch((err)=> console.log(err));
+  }
+
   return (
     <div style={{padding: '50px'}}>
         <table>
@@ -73,6 +85,7 @@ function App() {
             <th>Username</th>
             <th>Password</th>
             <th>Edit</th>
+            <th>Delete</th>
           </thead>
           <tbody>
             {data.map((d, i) =>(
@@ -84,6 +97,11 @@ function App() {
                 <td>
                   <button type="button" onClick={()=>handleEdit(d)}>
                     Edit
+                  </button>
+                </td>
+                <td>
+                  <button type="button" onClick={()=>handleDelete(d.id)}>
+                    Delete
                   </button>
                 </td>
               </tr>
